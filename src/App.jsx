@@ -89,25 +89,23 @@ function App() {
             {showMarkingOptions ? 'הסתר אפשרויות סימון' : 'שנה סגנון סימון'}
           </button>
           
-          {showMarkingOptions && (
-            <>
-              <label className="marking-label">בחר סגנון סימון לתשובות החדשות:</label>
-              <div className="marking-buttons">
-                <button 
-                  className={`marking-btn ${markingStyle === 'numbers-dots' ? 'active' : ''}`}
-                  onClick={() => setMarkingStyle('numbers-dots')}
-                >
-                  .3 .2 .1
-                </button>
-                <button 
-                  className={`marking-btn ${markingStyle === 'letters-dots' ? 'active' : ''}`}
-                  onClick={() => setMarkingStyle('letters-dots')}
-                >
-                  .א .ב .ג
-                </button>
-              </div>
-            </>
-          )}
+          <div className={`marking-content ${showMarkingOptions ? 'show' : ''}`}>
+            <label className="marking-label">בחר סגנון סימון לתשובות החדשות:</label>
+            <div className="marking-buttons">
+              <button 
+                className={`marking-btn ${markingStyle === 'numbers-dots' ? 'active' : ''}`}
+                onClick={() => setMarkingStyle('numbers-dots')}
+              >
+                .3 .2 .1
+              </button>
+              <button 
+                className={`marking-btn ${markingStyle === 'letters-dots' ? 'active' : ''}`}
+                onClick={() => setMarkingStyle('letters-dots')}
+              >
+                .א .ב .ג
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="button-group">

@@ -100,18 +100,60 @@ body {
   font-weight: 600;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
   margin-bottom: 0.5rem;
   outline: none !important;
   -webkit-outline: none !important;
   -moz-outline: none !important;
+  position: relative;
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(0deg);
+}
+
+.toggle-marking-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: blur(0.5px);
+}
+
+.toggle-marking-btn:hover::before {
+  left: 100%;
+}
+
+.toggle-marking-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  border-radius: 12px;
+}
+
+.toggle-marking-btn:hover::after {
+  opacity: 1;
 }
 
 .toggle-marking-btn:hover {
   background: rgba(59, 130, 246, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+  transform: perspective(1000px) rotateX(5deg) translateY(-3px);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+.toggle-marking-btn:active {
+  transform: perspective(1000px) rotateX(10deg) translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
 .toggle-marking-btn:focus {
@@ -130,11 +172,48 @@ body {
   text-align: center;
 }
 
+.marking-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 0;
+  filter: blur(2px);
+}
+
+.marking-content.show {
+  max-height: 200px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  margin-top: 1rem;
+  filter: blur(0px);
+}
+
 .marking-buttons {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  animation: slideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    filter: blur(3px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.95);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
 }
 
 .marking-btn {
@@ -186,11 +265,7 @@ body {
   position: relative;
 }
 
-.input-label::before {
-  content: '✏️';
-  margin-left: 8px;
-  font-size: 1rem;
-}
+
 
 .answers-textarea {
   width: 100%;
@@ -268,16 +343,13 @@ body {
 .mix-button:active {
   background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
   color: white;
-  border: 6px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.4);
   box-shadow: 
-    0 15px 50px rgba(30, 58, 138, 0.9),
-    0 0 60px rgba(30, 58, 138, 1),
-    0 0 80px rgba(30, 58, 138, 0.9),
-    0 0 100px rgba(30, 58, 138, 0.8),
-    0 0 120px rgba(30, 58, 138, 0.6);
-  transform: scale(1.3);
+    0 8px 25px rgba(30, 58, 138, 0.6),
+    0 0 30px rgba(30, 58, 138, 0.8);
+  transform: scale(1.1);
   z-index: 100;
-  filter: brightness(1.5) contrast(1.3);
+  filter: brightness(1.2) contrast(1.1);
 }
 
 .mix-button:focus {
@@ -321,16 +393,13 @@ body {
 .copy-button:active {
   background: linear-gradient(135deg, #059669, #10b981, #34d399);
   color: white;
-  border: 6px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.4);
   box-shadow: 
-    0 15px 50px rgba(5, 150, 105, 0.9),
-    0 0 60px rgba(5, 150, 105, 1),
-    0 0 80px rgba(5, 150, 105, 0.9),
-    0 0 100px rgba(5, 150, 105, 0.8),
-    0 0 120px rgba(5, 150, 105, 0.6);
-  transform: scale(1.3);
+    0 8px 25px rgba(5, 150, 105, 0.6),
+    0 0 30px rgba(5, 150, 105, 0.8);
+  transform: scale(1.1);
   z-index: 100;
-  filter: brightness(1.5) contrast(1.3);
+  filter: brightness(1.2) contrast(1.1);
 }
 
 .copy-button:focus {
